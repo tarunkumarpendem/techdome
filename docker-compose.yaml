@@ -1,0 +1,25 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./Techdome-frontend  # Build from this directory
+    ports:
+      - "3000:80"  # Map port 80 of the container to port 3000 on host
+    depends_on:
+      - backend
+
+  backend:
+    build:
+      context: ./Techdome-backend  # Build from this directory
+    ports:
+      - "5000:5000"
+    environment:
+      - DB=mongodb://db:27017/techdome
+    depends_on:
+      - db
+
+  db:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
